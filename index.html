@@ -94,30 +94,38 @@
 <p>然后创建了orange+ip的字符串的md5值为路径的文件夹并且将工作目录移动到该文件夹下。</p>
 <p>接着通过escapeshellarg命令对get请求传参的内容进行GET命令执行 （即 GET xxxxxx）</p>
 <p>后一段请求则是将get请求传入的filename的值记录为数组，这里顺便看一下pathinfo的定义</p>
-<h4 id="pathinfo"><a href="#pathinfo" class="headerlink" title="pathinfo"></a>pathinfo</h4><p><img src="/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119201518027.png" alt="image-20221119201518027"></p>
-<p><img src="/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119201549034.png" alt="image-20221119201549034"></p>
+<h4 id="pathinfo"><a href="#pathinfo" class="headerlink" title="pathinfo"></a>pathinfo</h4><p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119201518027.png" alt="image-20221119201518027"></p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119201549034.png" alt="image-20221119201549034"></p>
 <p>可以看到array内容的输出。</p>
 <p>回到本题，将basename($info[“dirname”]中的.取出，并以此为路径创建文件夹并移动到对应工作目录中，最后进行一个写操作。流程都差不多了，看起来挺清晰的，那么这个GET，到底是什么东西呢？</p>
-<h3 id="GET命令"><a href="#GET命令" class="headerlink" title="GET命令"></a>GET命令</h3><p>执行了GET /后看到，可以发现输出的类似于执行ls，但是格式是类似于html的格式</p>
-<p><img src="/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119203158630.png" alt="image-20221119203158630"></p>
+<h4 id="GET命令"><a href="#GET命令" class="headerlink" title="GET命令"></a>GET命令</h4><p>执行了GET /后看到，可以发现输出的类似于执行ls，但是格式是类似于html的格式</p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119203158630.png" alt="image-20221119203158630"></p>
 <p>执行GET ./文件名，发现可以读取文件。</p>
-<p><img src="/Perl-open%7D%EF%BF%BDgL/%60%7D%7BD$O2Z%25P6Z%5DLMSJ7ED@8.png" alt="img"></p>
+<p><img src="/2022/11/19/Perl-open%7D%EF%BF%BDgL/%60%7D%7BD$O2Z%25P6Z%5DLMSJ7ED@8.png" alt="img"></p>
 <p>那么我们构建如此的url，便可以执行相当于ls的效果</p>
-<p><img src="/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119204143927.png" alt="image-20221119204143927"></p>
-<p><img src="/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119204218302.png" alt="image-20221119204218302"></p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119204143927.png" alt="image-20221119204143927"></p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119204218302.png" alt="image-20221119204218302"></p>
 <p>但是当我门读取flag的时候就会发现一片空白，而当我们读取readflag后，会自动下载文件，打开一看发现是ELF开头的二进制文件，说明我们要执行readflag来获取flag</p>
-<p><img src="/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119204432900.png" alt="image-20221119204432900"></p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119204432900.png" alt="image-20221119204432900"></p>
 <p>那么该怎么通过GET执行文件呢，我本来打算通过whereis GET的方式看看命令相关的内容，但没啥有帮助的信息，看别人wp说是在这里</p>
 <p>/usr/share/perl5/LWP.pm下有相关内容，查看后发现</p>
-<p><img src="/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119205636543.png" alt="image-20221119205636543"></p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119205636543.png" alt="image-20221119205636543"></p>
 <p>GET命令是支持file请求的。</p>
 <p>那我们再跟进，看看/usr/share/perl5/LWP/file.pm的内容是什么</p>
-<p>其中有读文件相关的内容，但是open文件以只读的形式打开文件</p>
-<p><img src="/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119210003441.png" alt="image-20221119210003441"></p>
+<h4 id="OPEN方法"><a href="#OPEN方法" class="headerlink" title="OPEN方法"></a>OPEN方法</h4><p>其中有读文件相关的内容，但是open文件以只读的形式打开文件</p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119210003441.png" alt="image-20221119210003441"></p>
 <p>然后就找不到更多的了，后来看别人说的是因为<em><strong>ubuntu18.04</strong></em> 已经修复此漏洞，导致这里多了个只读</p>
 <p>修复前是这种：</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ($method <span class="keyword">ne</span> <span class="string">&quot;HEAD&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">open</span>(F, $path) <span class="keyword">or</span> <span class="keyword">return</span> new</span><br><span class="line">        HTTP::Response(&amp;HTTP::Status::RC_INTERNAL_SERVER_ERROR,</span><br><span class="line">               <span class="string">&quot;Cannot read file &#x27;$path&#x27;: $!&quot;</span>);</span><br><span class="line">    <span class="keyword">binmode</span>(F);</span><br></pre></td></tr></table></figure>
 
+<p><strong>open函数使用，前提必须是目标文件存在才行</strong></p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119211410718.png" alt="image-20221119211410718"></p>
+<p>所以我们要创建一个和我们要执行的命令相同的内容的文件名</p>
+<h3 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h3><p>开始手操！</p>
+<p>构造url： ?url=&amp;filename=bash -c /readflag|</p>
+<p>再执行url：?url=file:bash -c /readflag|&amp;filename=Saihara</p>
+<p>获得flag</p>
+<p><img src="/2022/11/19/Perl%E4%B8%ADopen%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/image-20221119212146769.png" alt="image-20221119212146769"></p>
 
       
     </div>
